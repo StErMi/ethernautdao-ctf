@@ -1,83 +1,63 @@
-# <h1 align="center"> Forge Template </h1>
+# EthernautDAO CTF - Foundry edition
 
-**Template repository for getting started quickly with Foundry projects**
+## What is EthernautDAO CTF
 
-![Github Actions](https://github.com/StErMi/forge-template/workflows/CI/badge.svg)
+[ΞthernautDAO](https://twitter.com/EthernautDAO) is common goods DAO aimed at transforming developers into Ethereum developers.
 
-## Recognitions
+They started releasing CTF challenges on Twitter, so how couldn't I start solving them?
 
-- Base [forge-template](https://github.com/foundry-rs/forge-template) from Foundry team
-- `Utilities.sol` from [FrankieIsLost forge-template](https://github.com/FrankieIsLost/forge-template)
+## Acknowledgements
 
-## What is different from base tamplate?
+- Created by [ΞthernautDAO](https://twitter.com/EthernautDAO)
+- [ΞthernautDAO Discord](discord.gg/RQ5WYDxUF3)
+- [Foundry](https://github.com/gakonst/foundry)
+- [Foundry Book](https://book.getfoundry.sh/)
 
-- Added FrankieIsLost `Utilities.sol`
-- Extended FrankieIsLost `Utilities.sol` to create tests users and setup them via `Utilities.createUsers`
-- Auto labeling created test users
-- Created `BaseTest.sol` contract
-- preconfigured `solhint` and `prettier`
+## How to play
 
-## Getting Started
+### Install Foundry
 
-Click "Use this template" on [GitHub](https://github.com/StErMi/forge-template) to create a new repository with this repo as the initial state.
-
-Or, if your repo already exists, run:
-
-```sh
-forge init
-forge build
-forge test
+```bash
+curl -L https://foundry.paradigm.xyz | bash
 ```
 
-## Writing your first test
+### Update Foundry
 
-All you need is to `import "./utils/BaseTest.sol";` that will inherit from and then inherit it from your test contract. Forge-std's Test contract comes with a pre-instatiated [cheatcodes environment](https://book.getfoundry.sh/cheatcodes/), the `vm`. It also has support for [ds-test](https://book.getfoundry.sh/reference/ds-test.html)-style logs and assertions. Finally, it supports Hardhat's [console.log](https://github.com/brockelmore/forge-std/blob/master/src/console.sol). The logging functionalities require `-vvvv`.
-
-```solidity
-// SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.13;
-
-import './utils/BaseTest.sol';
-
-contract TestContract is BaseTest {
-  constructor() {
-    // Created (during `setUp()`) users will be available in `users` state variable
-
-    // Setup test to create 2 test user with 100 ether in balance each
-    // preSetUp(2);
-
-    // Setup test to create 2 test user with 1 ether in balance each
-    // preSetUp(2, 1 ether);
-
-    // Setup test to create 2 test user with 1 ether in balance each and label them accordingly
-    string[] memory userLabels = new string[](2);
-    userLabels[0] = 'Alice';
-    userLabels[1] = 'Bob';
-    preSetUp(2, 100 ether, userLabels);
-  }
-
-  function setUp() public override {
-    // Call the BaseTest setUp() function that will also create testsing accounts
-    super.setUp();
-  }
-
-  function testSetUp() public {
-    assertEq(users.length, 2);
-    assertEq(users[0].balance, 100 ether);
-  }
-
-  function testBar() public {
-    assertEq(uint256(1), uint256(1), 'ok');
-  }
-
-  function testFoo(uint256 x) public {
-    vm.assume(x < type(uint128).max);
-    assertEq(x + x, x * 2);
-  }
-}
-
+```bash
+foundryup
 ```
 
-## Development
+### Clone repo and install dependencies
 
-This project uses [Foundry](https://getfoundry.sh). See the [book](https://book.getfoundry.sh/getting-started/installation.html) for instructions on how to install and use Foundry.
+```bash
+git clone git@github.com:StErMi/ethernautdao-ctf.git
+cd ethernautdao-ctf
+git submodule update --init --recursive
+```
+
+### Get a Goerli RPC URL to fork the network
+
+- Go to Alchemy or Infura
+- Create an account
+- Get an RPC URL for Goerli
+
+### Run a solution
+
+```bash
+# example forge test --match-contract TestCoinFlip
+forge test --match-contract <testname> --fork-url <your_rpc_url> --fork-block-number <blocknumber> -vv
+```
+
+Replace the following parameters
+
+- `<testname>` with the name of your contract's name for the test
+- `<your_rpc_url>` with the RPC URL you just grabbed from Alchemy or Infura
+- `<blocknumber>` with a valid Goerli block number that allow you to run the test. Usually, a block after the deployment transaction block is fine
+
+## Disclaimer
+
+All Solidity code, practices and patterns in this repository are DAMN VULNERABLE and for educational purposes only.
+
+I **do not give any warranties** and **will not be liable for any loss** incurred through any use of this codebase.
+
+**DO NOT USE IN PRODUCTION**.

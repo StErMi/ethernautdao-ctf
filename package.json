@@ -1,10 +1,9 @@
 {
-  "name": "forge-template",
+  "name": "ethernautdao-ctf",
   "version": "0.0.1",
-  "description": "**Template repository for getting started quickly with Foundry projects**",
+  "description": "EthernautDAO CTF solutions",
   "scripts": {
     "build": "forge build",
-    "test": "forge test",
     "prettier": "prettier --write 'src/**/*.sol' 'test/**/*.sol'",
     "prettier:list": "prettier --list-different 'src/**/*.sol' 'test/**/*.sol'",
     "prettier:check": "prettier --check 'src/**/*.sol' 'test/**/*.sol'",
@@ -15,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/StErMi/forge-template.git"
+    "url": "git+https://github.com/StErMi/ethernautdao-ctf.git"
   },
   "keywords": [],
   "author": "StErMi",
   "bugs": {
-    "url": "https://github.com/StErMi/forge-template/issues"
+    "url": "https://github.com/StErMi/ethernautdao-ctf/issues"
   },
-  "homepage": "https://github.com/StErMi/forge-template#readme",
+  "homepage": "https://github.com/StErMi/ethernautdao-ctf#readme",
   "devDependencies": {
     "prettier": "^2.6.2",
     "prettier-plugin-solidity": "^1.0.0-beta.19",

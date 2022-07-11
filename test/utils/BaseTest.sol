@@ -34,10 +34,7 @@ abstract contract BaseTest is Test {
     function setUp() public virtual {
         utilities = new Utilities();
 
-        console.log("userCount", userCount);
-
         if (userCount > 0) {
-            console.log("running utilities.createUsers");
             // check which one we need to call
             users = utilities.createUsers(userCount, userInitialFunds, userLabels);
         }
