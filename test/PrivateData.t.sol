@@ -32,7 +32,7 @@ contract PrivateDataTest is BaseTest {
         address owner = privateData.owner();
         assertEq(owner == player, false);
 
-        // load the secret key slot from slot 9
+        // load the secret key slot from slot 8
         bytes32 secretKeyBytes = vm.load(address(privateData), bytes32(uint256(8)));
         uint256 secretKey = uint256(secretKeyBytes);
 
