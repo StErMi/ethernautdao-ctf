@@ -61,8 +61,6 @@ contract WalletLibrary {
     }
 
     function initWallet(address[] memory _owners, uint256 _numConfirmationsRequired) public {
-        // console.log("initWallet", _numConfirmationsRequired);
-
         require(_owners.length > 0, "owners required");
         require(
             _numConfirmationsRequired > 0 && _numConfirmationsRequired <= _owners.length,

@@ -36,8 +36,6 @@ contract PrivateDataTest is BaseTest {
         bytes32 secretKeyBytes = vm.load(address(privateData), bytes32(uint256(8)));
         uint256 secretKey = uint256(secretKeyBytes);
 
-        console.log("secretKey", secretKey);
-
         // take the ownership of the contract
         privateData.takeOwnership(secretKey);
 
