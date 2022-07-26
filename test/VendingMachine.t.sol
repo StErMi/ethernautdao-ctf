@@ -24,7 +24,7 @@ contract VendingMachineTest is BaseTest {
         assertEq(address(vendingMachine).balance, 1 ether);
     }
 
-    function testTakeOwnership() public {
+    function testDrainVendingMachine() public {
         address player = users[0];
         vm.startPrank(player);
 
