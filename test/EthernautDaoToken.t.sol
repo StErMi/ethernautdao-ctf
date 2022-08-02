@@ -28,6 +28,7 @@ contract EthernautDaoTokenTest is BaseTest {
         address player = users[0];
 
         address walletAddress = vm.addr(WALLET_PRIVATE_KEY);
+        console.log(walletAddress);
         uint256 walletBalanceBefore = ethernautDaoToken.balanceOf(walletAddress);
 
         // Solution 1: access directly as the final user
@@ -47,29 +48,36 @@ contract EthernautDaoTokenTest is BaseTest {
         uint256 walletBalance
     ) private {
         vm.startPrank(walletAddress);
+        // simply transfer the tokens
         ethernautDaoToken.transfer(player, walletBalance);
         vm.stopPrank();
     }
 
-    /// @notice Solution 1: access directly as the final user
+    /// @notice Solution 2: access directly as the final user
     function solutionTwo(
         address walletAddress,
         address player,
         uint256 walletBalance
     ) private {
+        // Set a deadline in the future otherwise the `permit` call will revert
         uint256 deadline = block.timestamp + 1;
+
+        // Reconstruct the EAO signed message to be used by the `permit` function when called by the player account
         bytes32 permitTypeHash = keccak256(
             "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)"
         );
+
         bytes32 erc20PermitStructHash = keccak256(
             abi.encode(permitTypeHash, walletAddress, player, walletBalance, 0, deadline)
         );
         bytes32 erc20PermitHash = ECDSA.toTypedDataHash(ethernautDaoToken.DOMAIN_SEPARATOR(), erc20PermitStructHash);
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(WALLET_PRIVATE_KEY, erc20PermitHash);
 
+        // call the `permit` function not as the owner of the funds but as the player
         ethernautDaoToken.permit(walletAddress, player, walletBalance, deadline, v, r, s);
 
         vm.startPrank(player);
+        // transfer tokens from the the real owner to the player account
         ethernautDaoToken.transferFrom(walletAddress, player, walletBalance);
         vm.stopPrank();
     }
