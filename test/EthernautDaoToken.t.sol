@@ -27,7 +27,7 @@ contract EthernautDaoTokenTest is BaseTest {
     function testTransferEDTToken() public {
         address player = users[0];
 
-        address walletAddress = vm.addr(uint256(WALLET_PRIVATE_KEY));
+        address walletAddress = vm.addr(WALLET_PRIVATE_KEY);
         uint256 walletBalanceBefore = ethernautDaoToken.balanceOf(walletAddress);
 
         // Solution 1: access directly as the final user
