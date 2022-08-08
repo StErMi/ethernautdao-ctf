@@ -24,7 +24,7 @@ contract HackableTest is BaseTest {
         assertEq(hackableContract.done(), false);
     }
 
-    function testTransferEDTToken() public {
+    function testFindTheGoodBlock() public {
         address player = users[0];
 
         // This challenge is quite easy to find a solution
